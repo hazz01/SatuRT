@@ -19,7 +19,7 @@ class AppRoutes {
       case '/admin/surat':
         return MaterialPageRoute(builder: (_) => const KelolaSuratPage());    
       case '/admin/laporan':
-        return MaterialPageRoute(builder: (_) => const KelolaLaporanPage());
+        return MaterialPageRoute(builder: (_) => const ReportListScreen());
       case '/':
         return MaterialPageRoute(builder: (_) => const SplashPage());
       case '/login':
