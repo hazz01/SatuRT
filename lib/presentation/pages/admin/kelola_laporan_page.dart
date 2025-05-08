@@ -66,14 +66,14 @@ final List<Report> sampleReports = [
 ];
 
 // Main Screen - Report List
-class ReportListScreen extends StatefulWidget {
-  const ReportListScreen({super.key});
+class KelolaLaporanPage extends StatefulWidget {
+  const KelolaLaporanPage({super.key});
 
   @override
-  State<ReportListScreen> createState() => _ReportListScreenState();
+  State<KelolaLaporanPage> createState() => _ReportListScreenState();
 }
 
-class _ReportListScreenState extends State<ReportListScreen> {
+class _ReportListScreenState extends State<KelolaLaporanPage> {
   bool isFilterVisible = false;
   String? selectedCategory;
   DateTime? selectedDate;
