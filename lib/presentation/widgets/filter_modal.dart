@@ -21,6 +21,7 @@ class _FilterModalState extends State<FilterModal> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.all(20),
       height: MediaQuery.of(context).size.height * 0.6,
       child: Column(

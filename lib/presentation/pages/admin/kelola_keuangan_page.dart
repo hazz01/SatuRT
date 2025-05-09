@@ -20,19 +20,20 @@ class KelolaKeuanganPage extends StatefulWidget {
 
 class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
   // Current view state
-  int _currentView = 0; // 0: Dashboard, 1: Cash List, 2: Dues List, 3: Arrears List, 4: Success
-  
+  int _currentView =
+      0; // 0: Dashboard, 1: Cash List, 2: Dues List, 3: Arrears List, 4: Success
+
   // Modal states
   bool _showAddTransactionModal = false;
   bool _showCashSettingsModal = false;
   bool _showAddDuesModal = false;
   bool _showFilterModal = false;
-  
+
   // Financial data
   double _balance = 12500000;
   double _income = 5000000;
   double _expense = 2500000;
-  
+
   // Sample transaction data
   final List<Transaction> _transactions = [
     Transaction(
@@ -68,7 +69,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
       description: '2 Meter Pasti - RT 1 RW 8',
     ),
   ];
-  
+
   // Sample dues data
   final List<Dues> _duesList = [
     Dues(
@@ -104,7 +105,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
       description: '2 Meter Pasti - RT 1 RW 8',
     ),
   ];
-  
+
   // Sample arrears data
   final List<Dues> _arrearsList = [
     Dues(
@@ -174,7 +175,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
       _showAddDuesModal = false;
       _showFilterModal = false;
     });
-    
+
     // Automatically go back to dashboard after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
@@ -270,14 +271,14 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
         children: [
           // Main content based on current view
           _buildMainContent(),
-          
+
           // Modals
           if (_showAddTransactionModal)
             AddTransactionModal(
               onAdd: _addTransaction,
               onCancel: _toggleAddTransactionModal,
             ),
-            
+
           if (_showCashSettingsModal)
             CashSettingsModal(
               onSave: (settings) {
@@ -287,13 +288,13 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
               },
               onCancel: _toggleCashSettingsModal,
             ),
-            
+
           if (_showAddDuesModal)
             AddDuesModal(
               onAdd: _addDues,
               onCancel: _toggleAddDuesModal,
             ),
-            
+
           if (_showFilterModal)
             FilterModal(
               onApply: (filters) {
@@ -318,11 +319,21 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
         currentIndex: 1,
         onTap: (index) {
           switch (index) {
-            case 0: Navigator.pushReplacementNamed(context, '/admin/home'); break;
-            case 1: Navigator.pushReplacementNamed(context, '/admin/keuangan'); break;
-            case 2: Navigator.pushReplacementNamed(context, '/admin/cctv'); break;
-            case 3: Navigator.pushReplacementNamed(context, '/admin/surat'); break;
-            case 4: Navigator.pushReplacementNamed(context, '/admin/laporan'); break;
+            case 0:
+              Navigator.pushReplacementNamed(context, '/admin/home');
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/admin/keuangan');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/admin/cctv');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/admin/surat');
+              break;
+            case 4:
+              Navigator.pushReplacementNamed(context, '/admin/laporan');
+              break;
           }
         },
       ),
@@ -365,18 +376,21 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
 
   Widget _buildDashboardView() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Balance Card
           Card(
-            elevation: 2,
+            elevation: 4,
+            shadowColor: Colors.black.withOpacity(0.15),
+            color: Colors.white,
+            margin: const EdgeInsets.fromLTRB(0, 16, 0, 16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -384,15 +398,17 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
                     'Saldo RT/RW',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF636363),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Rp ${_formatCurrency(_balance)}',
                     style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -400,7 +416,8 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
                     'Rekapitulasi Bulan Ini',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -425,55 +442,81 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
                         // Navigate to detailed report
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: const Color(0xFF1658B3),
                         foregroundColor: Colors.white,
+                        elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(68),
                         ),
                       ),
-                      child: const Text('Buat Laporan Keuangan'),
+                      child: const Text(
+                        'Buat Laporan Keuangan',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Menu Buttons
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MenuButton(
-                icon: Icons.account_balance_wallet,
-                label: 'Kas',
-                onTap: _navigateToCashList,
+              Expanded(
+                child: MenuButton(
+                  icon: Icons.account_balance_wallet,
+                  label: 'Kas',
+                  onTap: _navigateToCashList,
+                  backgroundColor: const Color(0x261658B3),
+                  textColor: const Color(0xFF1658B3),
+                ),
               ),
-              MenuButton(
-                icon: Icons.receipt_long,
-                label: 'Iuran',
-                onTap: _navigateToDuesList,
+              const SizedBox(width: 8),
+              Expanded(
+                child: MenuButton(
+                  icon: Icons.receipt_long,
+                  label: 'Iuran',
+                  onTap: _navigateToDuesList,
+                  backgroundColor: const Color(0x261658B3),
+                  textColor: const Color(0xFF1658B3),
+                ),
               ),
             ],
           ),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MenuButton(
-                icon: Icons.warning_amber,
-                label: 'Tunggakan',
-                onTap: _navigateToArrearsList,
+              Expanded(
+                child: MenuButton(
+                  icon: Icons.warning_amber,
+                  label: 'Tunggakan',
+                  onTap: _navigateToArrearsList,
+                  backgroundColor: const Color(0x261658B3),
+                  textColor: const Color(0xFF1658B3),
+                ),
               ),
-              MenuButton(
-                icon: Icons.bar_chart,
-                label: 'Laporan',
-                onTap: () {
-                  // Navigate to reports
-                },
-              ),
+              // const SizedBox(width: 8),
+              // Expanded(
+              //   child: MenuButton(
+              //     icon: Icons.bar_chart,
+              //     label: 'Laporan',
+              //     onTap: () {
+              //       // Navigate to reports
+              //     },
+              //     backgroundColor: const Color(0x261658B3),
+              //     textColor: const Color(0xFF1658B3),
+              //   ),
+              // ),
             ],
           ),
         ],
@@ -521,52 +564,52 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
   }
 
   Widget _buildCashListView() {
-    return Column(
-      children: [
-        // Filter chips
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _buildFilterChip(
-                  label: 'Pemasukan',
-                  isActive: true,
-                ),
-                const SizedBox(width: 8),
-                _buildFilterChip(
-                  label: 'Pengeluaran',
-                  isActive: false,
-                ),
-                const SizedBox(width: 8),
-                _buildFilterChip(
-                  label: 'Semua',
-                  isActive: false,
-                ),
-              ],
-            ),
+  return Column(
+    children: [
+      // Filter chips
+      Padding(
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _buildFilterChip(
+                label: 'Pemasukan',
+                isActive: true,
+              ),
+              const SizedBox(width: 8),
+              _buildFilterChip(
+                label: 'Pengeluaran',
+                isActive: false,
+              ),
+              const SizedBox(width: 8),
+              _buildFilterChip(
+                label: 'Semua',
+                isActive: false,
+              ),
+            ],
           ),
         ),
-        
-        // Transactions list
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: _transactions.length,
-            itemBuilder: (context, index) {
-              return TransactionListItem(
-                transaction: _transactions[index],
-                onTap: () {
-                  // View transaction details
-                },
-              );
-            },
-          ),
+      ),
+
+      // Transactions list
+      Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+          itemCount: _transactions.length,
+          itemBuilder: (context, index) {
+            return TransactionListItem(
+              transaction: _transactions[index],
+              onTap: () {
+                // View transaction details
+              },
+            );
+          },
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   Widget _buildDuesListView() {
     return Column(
@@ -591,7 +634,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
             ),
           ),
         ),
-        
+
         // Dues list
         Expanded(
           child: ListView.builder(
@@ -604,7 +647,9 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
                   name: _duesList[index].name,
                   date: _duesList[index].date,
                   amount: _duesList[index].amount,
-                  type: _duesList[index].isPaid ? TransactionType.income : TransactionType.pending,
+                  type: _duesList[index].isPaid
+                      ? TransactionType.income
+                      : TransactionType.pending,
                   description: _duesList[index].description,
                 ),
                 onTap: () {
@@ -618,7 +663,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
     );
   }
 
-  Widget _buildArrearsListView() {
+  Widget  _buildArrearsListView() {
     return Column(
       children: [
         // Search bar
@@ -638,7 +683,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
             ),
           ),
         ),
-        
+
         // Filter chips
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -661,7 +706,7 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
             ),
           ),
         ),
-        
+
         // Arrears list
         Expanded(
           child: ListView.builder(
@@ -769,38 +814,40 @@ class _KelolaKeuanganPageState extends State<KelolaKeuanganPage> {
     );
   }
 
-  Widget _buildFilterChip({
-    required String label,
-    required bool isActive,
-    IconData? icon,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: isActive ? Colors.blue : Colors.grey[200],
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          if (icon != null) ...[
-            Icon(
-              icon,
-              size: 16,
-              color: isActive ? Colors.white : Colors.grey[600],
-            ),
-            const SizedBox(width: 4),
-          ],
-          Text(
-            label,
-            style: TextStyle(
-              color: isActive ? Colors.white : Colors.grey[600],
-              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            ),
+Widget _buildFilterChip({
+  required String label,
+  required bool isActive,
+  IconData? icon,
+}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    decoration: BoxDecoration(
+      color: isActive ? const Color(0xFF1658B3) : const Color(0x261658B3),
+      borderRadius: BorderRadius.circular(68),
+    ),
+    child: Row(
+      children: [
+        if (icon != null) ...[
+          Icon(
+            icon,
+            size: 16,
+            color: isActive ? Colors.white : const Color(0xFF1658B3),
           ),
+          const SizedBox(width: 6),
         ],
-      ),
-    );
-  }
+        Text(
+          label,
+          style: TextStyle(
+            color: isActive ? Colors.white : const Color(0xFF1658B3),
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
   String _formatCurrency(double amount) {
     return amount.toStringAsFixed(0).replaceAllMapped(

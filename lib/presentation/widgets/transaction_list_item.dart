@@ -15,7 +15,9 @@ class TransactionListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 1,
+      elevation: 4,
+      shadowColor: Colors.black.withOpacity(0.15),
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -23,7 +25,7 @@ class TransactionListItem extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
           child: Row(
             children: [
               Expanded(
@@ -33,24 +35,27 @@ class TransactionListItem extends StatelessWidget {
                     Text(
                       transaction.name,
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       transaction.description,
-                      style: TextStyle(
-                        color: Colors.grey[600],
+                      style: const TextStyle(
+                        color: Color(0xFF636363),
                         fontSize: 14,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       transaction.date,
-                      style: TextStyle(
-                        color: Colors.grey[600],
+                      style: const TextStyle(
+                        color: Color(0xFF636363),
                         fontSize: 14,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -62,8 +67,9 @@ class TransactionListItem extends StatelessWidget {
                   Text(
                     'Rp ${_formatCurrency(transaction.amount)}',
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -80,26 +86,51 @@ class TransactionListItem extends StatelessWidget {
   Widget _buildStatusIndicator(TransactionType type) {
     IconData icon;
     Color color;
+    String label;
     
     switch (type) {
       case TransactionType.income:
         icon = Icons.check_circle;
-        color = Colors.green;
+        color = const Color(0xFF2E9A59); // Green with consistent branding
+        label = 'Masuk';
         break;
       case TransactionType.expense:
         icon = Icons.remove_circle;
-        color = Colors.red;
+        color = const Color(0xFFFF4041); // Red from warga card delete button
+        label = 'Keluar';
         break;
       case TransactionType.pending:
         icon = Icons.access_time;
-        color = Colors.orange;
+        color = const Color(0xFFF9A825); // Branded orange
+        label = 'Tertunda';
         break;
     }
     
-    return Icon(
-      icon,
-      color: color,
-      size: 24,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(68),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: 14,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

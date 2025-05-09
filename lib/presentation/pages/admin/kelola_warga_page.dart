@@ -231,29 +231,32 @@ class _KelolaWargaPageState extends State<KelolaWargaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF8F8F8),
-      appBar: AppBar(
-        backgroundColor: Color(0xFFF8F8F8),
-        title: const Text('Kelola Data Warga'),
-        actions: [
-          if (_isSelectMode)
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: _toggleSelectMode,
-            ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFFF8F8F8),
+      //   title: const Text('Kelola Data Warga'),
+      //   actions: [
+      //     if (_isSelectMode)
+      //       IconButton(
+      //         icon: const Icon(Icons.close),
+      //         onPressed: _toggleSelectMode,
+      //       ),
+      //   ],
+      // ),
       body: Stack(
         children: [
           Column(
             children: [
+              SizedBox(
+                height: 70,
+              ),
               _buildSearchBar(),
               SizedBox(
                 height: 18,
               ),
               _buildFilterChips(),
-              SizedBox(
-                height: 18,
-              ),
+              // SizedBox(
+              //   height: 18,
+              // ),
               Expanded(
                 child:
                     _isSelectMode ? _buildSelectModeList() : _buildWargaList(),
