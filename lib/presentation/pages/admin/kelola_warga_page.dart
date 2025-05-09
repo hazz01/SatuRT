@@ -1000,7 +1000,7 @@ class _KelolaWargaPageState extends State<KelolaWargaPage> {
         child: Container(
           color: Colors.black.withOpacity(0.2),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {}, // Ini untuk mencegah tap menutup modal
             child: StatefulBuilder(
               builder: (BuildContext context, StateSetter setModalState) {
                 return DraggableScrollableSheet(
@@ -1010,7 +1010,7 @@ class _KelolaWargaPageState extends State<KelolaWargaPage> {
                   builder: (context, scrollController) {
                     return Container(
                       padding: const EdgeInsets.all(30),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color(0xFFF7F7F7),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
@@ -1028,95 +1028,99 @@ class _KelolaWargaPageState extends State<KelolaWargaPage> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          GestureDetector(
-                            onTap: _toggleAddDataPopup,
-                            child: Container(
-                              color: Colors.black.withOpacity(0.5),
-                              height: double.infinity,
-                              width: double.infinity,
-                            ),
+                          Row(
+                            children: [
+                              const Expanded(child: Text("")),
+                              const Expanded(
+                                flex: 12,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Add Data',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    size: 24,
+                                    color: Colors.black.withOpacity(0.65),
+                                  ),
+                                  onPressed: () {
+                                    _toggleAddDataPopup;
+                                  },
+                                ),
+                              )
+                            ],
                           ),
-                          Center(
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        'Add Data',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.close),
-                                        onPressed: _toggleAddDataPopup,
-                                      ),
-                                    ],
+                          const SizedBox(height: 23),
+                          _buildFormField('Nama', 'Masukkan Nama Warga'),
+                          const SizedBox(height: 8),
+                          _buildFormField('NIK', 'Masukkan NIK Warga'),
+                          const SizedBox(height: 8),
+                          _buildFormField('Alamat', 'Masukkan Alamat Warga'),
+                          const SizedBox(height: 8),
+                          _buildFormField('TTL', 'Tanggal / Bulan / Tahun'),
+                          const SizedBox(height: 36),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  label: const Text(
+                                    'Upload',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFDDE8F8)),
                                   ),
-                                  const SizedBox(height: 20),
-                                  _buildFormField(
-                                      'Nama', 'Masukkan Nama Warga'),
-                                  const SizedBox(height: 10),
-                                  _buildFormField('NIK', 'Masukkan NIK Warga'),
-                                  const SizedBox(height: 10),
-                                  _buildFormField(
-                                      'Alamat', 'Masukkan Alamat Warga'),
-                                  const SizedBox(height: 10),
-                                  _buildFormField(
-                                      'TTL', 'Tanggal / Bulan / Tahun'),
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.blue,
-                                            foregroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            // Add data logic here
-                                            _toggleAddDataPopup();
-                                          },
-                                          child: const Text('Upload'),
-                                        ),
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    minimumSize: const Size(0, 55),
+                                    backgroundColor: Color(0xFF1658B3),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(84),
+                                      side: const BorderSide(
+                                        color: Color(0xFFB0CAEF),
+                                        width: 1,
                                       ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                            side: const BorderSide(
-                                                color: Colors.blue),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                          onPressed: _toggleAddDataPopup,
-                                          child: const Text('Cancel',
-                                              style: TextStyle(
-                                                  color: Colors.blue)),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ],
+                                  onPressed: () {
+                                    _toggleAddDataPopup();
+                                  },
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  label: const Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF1658B3),
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    minimumSize: const Size(0, 55),
+                                    backgroundColor: Color(0xFFDCE6F4),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(84),
+                                      side: BorderSide.none,
+                                    ),
+                                  ),
+                                  onPressed: _toggleAddDataPopup,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -1302,20 +1306,45 @@ class _KelolaWargaPageState extends State<KelolaWargaPage> {
   }
 
   Widget _buildFormField(String label, String hint) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label),
-        const SizedBox(height: 5),
-        TextField(
-          decoration: InputDecoration(
-            hintText: hint,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
-        ),
-      ],
+          SizedBox(height: 8.0),
+          TextField(
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: 16.0,
+              ),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
+            ),
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
